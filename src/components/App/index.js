@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // == Import npm
 import React from 'react';
 
@@ -10,11 +11,14 @@ import Footer from 'src/components/Footer';
 // == Import styles
 import './app.scss';
 
+// == Import datas
+import meteoDatas from 'src/datas/meteo';
+
 // == Composant
 const App = () => (
   <div className="app">
     <Header />
-    <Meteo />
+    <Meteo meteoDatas={meteoDatas} />
     <MeteoDetails />
     <Footer />
   </div>
