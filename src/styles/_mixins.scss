@@ -1,0 +1,5 @@
+@mixin sm-mobile {
+    @media screen and (max-width: 350px) {
+        @content;
+    }
+}

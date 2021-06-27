@@ -1,0 +1,132 @@
+@use 'src/styles/vars';
+@use 'src/styles/mixins';
+
+.header {
+    overflow: hidden;
+    padding-bottom: 1.5rem;
+    position: relative;
+    width: 100%;
+    height: 10rem;
+
+    &__circle {
+        position: absolute;
+        border-radius: 50%;
+    }
+
+    &__circle--blue {
+        background: vars.$mediumBlue;
+    }
+
+    &__circle--grey {
+        background: vars.$mediumGrey;
+    }
+
+    &__circle--orange {
+        background: vars.$mediumOrange;
+    }
+
+    &__title {
+        font-family: 'Kirang Haerang', cursive;
+        font-size: 2rem;
+        transform: translateY(-.7rem);
+
+        &::after {
+            content: '';
+            display: block;
+            width: 80%;
+            height: 2px;
+            position: absolute;
+            left: 10%;
+            background: vars.$dark;
+            z-index: 100;
+        }
+    }
+}
+
+#circle1 {
+    width: 4.5rem; 
+    height: 4.5rem;
+    transform: translate(-1rem, -1rem);
+}
+
+#circle2 {
+    width: 8.5rem;
+    height: 8.5rem;
+    transform: translate(1.3rem, .8rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#circle3 {
+    width: 5.5rem;
+    height: 5.5rem;
+    transform: translate(9rem, 1.5rem);
+}
+
+#circle4 {
+    width: 3rem;
+    height: 3rem;
+    transform: translate(17rem, 5rem);
+}
+
+#circle5 {
+    width: 1.7rem;
+    height: 1.7rem;
+    transform: translate(20rem, 3.3rem);
+}
+
+#circle6 {
+    width: 2rem;
+    height: 1rem;
+    border-radius: 0 0 1rem 1rem;
+    transform: translateY(.95rem);
+
+}
+
+@include mixins.sm-mobile {
+    .header__title {
+        font-size: 1.6rem;
+
+        &::after {
+            height: 2px;
+            background: vars.$dark;
+            z-index: 100;
+        }
+    }
+
+    #circle1 {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    #circle2 {
+        width: 7rem;
+        height: 7rem;
+    }
+
+    #circle3 {
+        width: 4.5rem;
+        height: 4.5rem;
+        transform: translate(7.5rem, 1.5rem);
+    }
+
+    #circle4 {
+        width: 2.6rem;
+        height: 2.6rem;
+        transform: translate(14rem, 4.5rem);
+    }
+
+    #circle5 {
+        width: 1.4rem;
+        height: 1.4rem;
+        transform: translate(17rem, 3.3rem);
+    }
+
+    #circle6 {
+        width: 1.8rem;
+        height: .9rem;
+        transform: translateY(.7rem);
+    }
+}

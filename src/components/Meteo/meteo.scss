@@ -1,0 +1,42 @@
+@use 'src/styles/vars';
+@use 'src/styles/mixins';
+
+.meteo {
+    text-align: center;
+    margin-top: 2rem;
+
+    &__city {
+        font-size: 1.4rem;
+    }
+
+    &__temperature {
+        font-size: 4rem;
+        color: vars.$mediumOrange;
+        margin: .5rem 0;
+        text-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
+    }
+
+    &__image {
+        margin: 1.5rem 0;
+        width: 30%;
+        height: auto;
+    }
+}
+
+@include mixins.sm-mobile {
+    .meteo {
+        margin-top: .5rem;
+
+        &__city {
+            font-size: 1.2rem;
+        }
+
+        &__temperature {
+            font-size: 3rem;
+        }
+
+        &__image {
+            width: 25%;
+        }
+    }
+}

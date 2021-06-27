@@ -1,0 +1,12 @@
+@use 'src/styles/vars';
+
+.app {
+  max-width: 500px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: vars.$lightGrey;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
