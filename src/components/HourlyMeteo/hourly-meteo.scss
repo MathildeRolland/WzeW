@@ -1,16 +1,21 @@
 @use 'src/styles/vars';
 @use 'src/styles/mixins';
 
-.meteo-details {
+.hourly-meteo {
     display: flex;
     text-align: center;
-    background: linear-gradient(to right, vars.$mediumBlue 50%, vars.$mediumGrey);
+    background: linear-gradient(to right, vars.$mediumBlue 0% vars.$mediumBlue 50%, vars.$mediumGrey);
     margin: 2rem 0;
     box-shadow: 0 0 10px vars.$dark;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        height: 0;
+    }
     
     &__time {
-        width: calc(100% / 4);
-        padding-top: .8rem;
+        width: 250px;
+        padding: .8rem 1em 0 1em;
         position: relative;
 
         &::after {
@@ -36,14 +41,14 @@
     }
 
     &__image {
-        width: 40%;
+        width: 90%;
         height: auto;
-        margin: .4rem 0 .8rem 0;
+        margin: .4rem 0 .6rem 0;
     }
 }
 
 @include mixins.sm-mobile {
-    .meteo-details {
+    .hourly-meteo {
         margin: 1rem 0;
     }
 }

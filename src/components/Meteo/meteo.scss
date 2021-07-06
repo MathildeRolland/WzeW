@@ -10,15 +10,20 @@
     }
 
     &__temperature {
-        font-size: 4rem;
+        font-size: 3.5rem;
         color: vars.$mediumOrange;
         margin: .5rem 0;
         text-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
     }
 
+    &__time {
+        margin-top: .5em;
+        font-style: italic;
+    }
+
     &__image {
-        margin: 1.5rem 0;
-        width: 30%;
+        margin: 0 0 1.5rem 0;
+        width: 20%;
         height: auto;
     }
 }
