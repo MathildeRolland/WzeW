@@ -10,7 +10,7 @@
     overflow: auto;
 
     &::-webkit-scrollbar {
-        height: 0;
+        display: none;
     }
     
     &__time {
@@ -64,5 +64,18 @@
         width: 15%;
         margin-right: .3rem;
         height: auto;
+    }
+}
+
+@include mixins.desktop {
+    .hourly-meteo {
+        &::-webkit-scrollbar {
+            display: block;
+            background-color: vars.$mediumGrey;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: vars.$mediumBlue;
+        }
     }
 }

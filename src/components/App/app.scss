@@ -10,4 +10,15 @@
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+
+  &__fail-request {
+    text-align: center;
+    width: 70%;
+    margin: auto;
+    padding: 1em;
+    border: 1px solid vars.$mediumOrange;
+    border-radius: .4em;
+    background: vars.$mediumGrey;
+    transform: translateY(-3em);
+  }
 }

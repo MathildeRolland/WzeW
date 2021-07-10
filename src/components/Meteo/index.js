@@ -14,7 +14,12 @@ const Meteo = ({ weather, city }) => (
 );
 
 Meteo.propTypes = {
-  weather: PropTypes.object.isRequired,
+  weather: PropTypes.objectOf(
+    PropTypes.shape({
+      currentTime: PropTypes.string.isRequired,
+      temp: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
   city: PropTypes.string.isRequired,
 };
 

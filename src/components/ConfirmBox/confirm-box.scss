@@ -1,0 +1,36 @@
+@use 'src/styles/vars';
+
+.confirm-box {
+    width: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid vars.$mediumOrange;
+    border-radius: .4em;
+    padding: 1em;
+    background: vars.$mediumGrey;
+
+    p {
+        margin: .5em 0;
+        text-align: center;
+    }
+
+    &__modality {
+        font-size: .7em;    
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.button_confirm {
+    background: vars.$mediumOrange;
+    color: #fff;
+
+    &:hover {
+        color: vars.$dark;
+    }
+}

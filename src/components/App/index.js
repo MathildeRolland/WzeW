@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 /* eslint-disable linebreak-style */
 /* eslint-disable indent */
 // == Import npm
@@ -9,21 +10,24 @@ import Header from 'src/components/Header';
 import Meteo from 'src/components/Meteo';
 import HourlyMeteo from 'src/components/HourlyMeteo';
 import Footer from 'src/components/Footer';
+import Loading from 'src/components/Loading';
+import ConfirmBox from 'src/components/ConfirmBox';
 
 import { convertDatetimeToHour, getNextTwelveHoursWeathers } from '../../selectors';
 
 // == Import styles
 import './app.scss';
 
-// == Import datas
-// import meteoDatas from 'src/datas/meteo';
-
 // == Composant
 const App = () => {
   // == State
   const [weather, setWeather] = useState({});
   const [weatherByHour, setWeatherByHour] = useState([]);
-  const [city, setCity] = useState('Lyon');
+  const [city, setCity] = useState('');
+  const [isLocated, setIsLocated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [hasRefused, setHasRefused] = useState(false);
+  const [apiRespond, setApiRespond] = useState(true);
 
   // == Functions
   const getCityFromCoords = (lat, long) => {
@@ -46,7 +50,7 @@ const App = () => {
   const fetchCurrentWeather = (lat, long) => {
     axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=minutely&units=metric&appid=8e505da12139283e541cddb83a9510aa`)
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
           // Find the current City with the location coords
           getCityFromCoords(lat, long);
 
@@ -54,45 +58,97 @@ const App = () => {
           const simplifyWeather = {
             currentTime: convertDatetimeToHour(response.data.current.dt),
             temp: response.data.current.temp,
-            icon: `http://openweathermap.org/img/w/${response.data.current.weather[0].icon}.png`,
+            icon: `https://openweathermap.org/img/w/${response.data.current.weather[0].icon}.png`,
           };
 
           // Modify state
           setWeather(simplifyWeather);
           const hourlyWeather = getNextTwelveHoursWeathers(response.data.hourly);
           setWeatherByHour(hourlyWeather);
+          setApiRespond(true);
+          setLoading(false);
         })
-        .catch((error) => {
-            console.log('erreur =>', error);
+        .catch(() => {
+            setApiRespond(false);
+            console.log('erreur');
+            setLoading(false);
         });
   };
 
-  const findUserLocation = () => {
-    if (navigator.geolocation) {
-      // console.log('Geolocalisation en cours...');
-      navigator.geolocation.getCurrentPosition((position) => {
-          let { latitude, longitude } = position.coords;
-          latitude = (latitude.toFixed(2));
-          longitude = (longitude.toFixed(2));
+  const userLocationSuccess = (position) => {
+    let { latitude, longitude } = position.coords;
+    latitude = (latitude.toFixed(2));
+    longitude = (longitude.toFixed(2));
 
-          // Get weather informations from API
-          fetchCurrentWeather(latitude, longitude);
-      });
+    // Get weather informations from API
+    fetchCurrentWeather(latitude, longitude);
+  };
+
+  const userLocationFail = (error) => {
+    document.textContent = `Désolé, une erreur est survenue: ${error}`;
+  };
+
+  const locationOptions = {
+    maximumAge: 0,
+    timeout: 5000,
+    enableHighAccuracy: true,
+  };
+
+  const navLocation = navigator.geolocation;
+
+  const findUserLocation = () => {
+    if (navLocation) {
+      // console.log('Geolocalisation en cours...');
+      navigator.geolocation.getCurrentPosition(
+        userLocationSuccess,
+        userLocationFail,
+        locationOptions,
+      );
     }
     else {
         console.log('error');
+        setApiRespond(false);
     }
   };
 
   useEffect(() => {
-    findUserLocation();
+    setTimeout(() => {
+      findUserLocation();
+    }, 500);
   }, []);
+
+  const handleConfirmation = () => {
+    setIsLocated(true);
+  };
+
+  const handleRefuse = () => {
+    setHasRefused(true);
+  };
 
   return (
     <div className="app">
       <Header />
-      <Meteo weather={weather} city={city} />
-      <HourlyMeteo weatherByHour={weatherByHour} />
+        {!isLocated
+          && (
+            <ConfirmBox
+              handleConfirmation={handleConfirmation}
+              handleRefuse={handleRefuse}
+              hasRefused={hasRefused}
+            />
+          )}
+        {isLocated
+          && (
+            loading && <Loading />,
+            !loading && (
+              apiRespond ? (
+                <>
+                  <Meteo weather={weather} city={city} />
+                  <HourlyMeteo weatherByHour={weatherByHour} />
+                </>
+              )
+              : <p className="app__fail-request">Désolé, la requête n'a pas abouti, veuillez réessayer plus tard...</p>
+            )
+        )}
       <Footer />
     </div>
   );
