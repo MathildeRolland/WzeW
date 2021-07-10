@@ -29,12 +29,16 @@ const App = () => {
   const [hasRefused, setHasRefused] = useState(false);
   const [apiRespond, setApiRespond] = useState(true);
 
+  // == API KEYS
+  const openWeatherApiKey = process.env.REACT_APP_OPENWEATHER_KEY;
+  const rapidapiKey = process.env.REACT_APP_RAPIDAPI_KEY;
+
   // == Functions
   const getCityFromCoords = (lat, long) => {
     const options = {
       params: { location: `${lat},${long}`, language: 'en' },
       headers: {
-        'x-rapidapi-key': '2b0038fd0bmsh5b7e09aa3a67bcdp19ebffjsnfa99f3065251',
+        'x-rapidapi-key': rapidapiKey,
         'x-rapidapi-host': 'trueway-geocoding.p.rapidapi.com',
       },
     };
@@ -48,7 +52,7 @@ const App = () => {
   };
 
   const fetchCurrentWeather = (lat, long) => {
-    axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=minutely&units=metric&appid=8e505da12139283e541cddb83a9510aa`)
+    axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude=minutely&units=metric&appid=${openWeatherApiKey}`)
         .then((response) => {
           console.log(response.data);
           // Find the current City with the location coords
